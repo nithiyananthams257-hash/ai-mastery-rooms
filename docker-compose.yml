@@ -1,0 +1,16 @@
+services:
+  mongodb:
+    image: mongo:8
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mystery-mongo:/data/db
+  # Optional durable queue dependency for a future BullMQ worker.
+  redis:
+    image: redis:7-alpine
+    profiles: ["queue"]
+    ports:
+      - "6379:6379"
+volumes:
+  mystery-mongo:

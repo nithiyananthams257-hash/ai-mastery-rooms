@@ -1,0 +1,34 @@
+{
+  "name": "ai-mystery-room",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.6.0" },
+  "workspaces": [
+    "apps/api",
+    "apps/web",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c blue,green \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm --workspace @mystery/api run dev",
+    "dev:web": "npm --workspace @mystery/web run dev",
+    "build": "npm run build --workspace @mystery/shared && npm run build --workspace @mystery/api && npm run build --workspace @mystery/web",
+    "typecheck": "npm run build --workspace @mystery/shared && npm run typecheck --workspace @mystery/api && npm run typecheck --workspace @mystery/web",
+    "test": "npm run test --workspace @mystery/api && npm run test --workspace @mystery/web",
+    "seed": "node --experimental-strip-types scripts/seed.ts",
+    "check:env": "node --experimental-strip-types scripts/check-env.ts",
+    "verify:build": "node --experimental-strip-types scripts/verify-build.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "typescript": "^5.9.3"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "protobufjs@7.6.6": true,
+    "@google/genai@2.31.0": true
+  }
+}
+
+
